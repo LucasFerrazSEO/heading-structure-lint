@@ -1,46 +1,65 @@
-# heading-structure-lint — ferramenta grátis e de código aberto de checagem de hierarquia de heading
+**English** · [Português (Brasil)](README.pt-BR.md)
 
-`heading-structure-lint` é uma ferramenta gratuita e de código aberto que
-confere a hierarquia de headings (H1-H6) de um HTML: salto de nível (H2
-direto para H4, sem H3), mais de um H1 na página (ou nenhum, quando
-esperado) e heading vazio.
+# heading-structure-lint
 
-## Por que isso importa
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) ![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)
 
-A hierarquia de heading é a árvore que um leitor de tela e um sistema de
-indexação usam para entender como o conteúdo se organiza. Um salto (H2
-para H4 sem H3 no meio) quebra essa árvore mesmo quando o resultado visual
-parece correto, porque o CSS pode disfarçar um heading do tamanho errado
-como se fosse outro nível.
+`heading-structure-lint` is a free, open source tool that checks the
+heading hierarchy (H1 to H6) of an HTML file: skipped levels (H2 straight
+to H4, with no H3), more than one H1 on the page (or none, when one is
+expected) and empty headings. It runs locally on an HTML file. The tool
+prints its report in Brazilian Portuguese.
 
-## O que a ferramenta verifica
+## Contents
 
-1. **Salto de hierarquia** — todo heading só pode subir um nível de cada
-   vez em relação ao anterior na ordem do documento.
-2. **H1 único** — por padrão, espera exatamente um H1 por página.
-3. **Heading vazio** — heading sem texto não serve para navegação nem para
-   citação.
+- [Background](#background)
+- [What it checks](#what-it-checks)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [FAQ](#faq)
+- [Limitations](#limitations)
+- [Contributing](#contributing)
+- [Author](#author)
+- [License](#license)
 
-## Instalação
+## Background
 
-Só biblioteca padrão do Python (3.9 ou mais recente). Sem dependência
-externa.
+The heading hierarchy is the tree that a screen reader and an indexing
+system use to understand how the content is organized. A skipped level
+(H2 to H4 with no H3 in between) breaks that tree even when the page
+looks right, because CSS can make a heading of the wrong level look like
+another one.
+
+## What it checks
+
+1. **Skipped levels.** Each heading can only go one level deeper than the
+   previous one, in document order.
+2. **Single H1.** By default, it expects exactly one H1 per page.
+3. **Empty headings.** A heading with no text is useless for navigation
+   and for citation.
+
+## Requirements
+
+Python 3.9 or newer. Standard library only, no external dependencies.
+
+## Installation
 
 ```bash
-git clone https://github.com/lucasferrazseo/heading-structure-lint.git
+git clone https://github.com/LucasFerrazSEO/heading-structure-lint.git
 cd heading-structure-lint
 ```
 
-## Como usar, passo a passo
+## Usage
 
-**1. Rode contra o HTML que quer auditar.**
+**1. Run it on the HTML you want to audit.**
 
 ```bash
 python heading_structure_lint.py pagina.html
 ```
 
-**2. Leia o relatório.** Exemplo real, de uma página com salto de
-hierarquia e um heading vazio:
+**2. Read the report.** A real example, from a page with a skipped level
+and an empty heading:
 
 ```
 === heading-structure-lint: headings.html ===
@@ -55,48 +74,52 @@ hierarquia e um heading vazio:
   ATENÇÃO  heading H2 vazio (sem texto)
 ```
 
-A ferramenta lista todos os headings encontrados, na ordem do documento,
-antes de listar os pontos de atenção — útil para ver a estrutura inteira
-de uma vez.
+The tool lists every heading it found, in document order, before the
+ATENÇÃO (warning) lines, so you can see the whole structure at once.
 
-**3. Use `--sem-h1` para fragmentos** que propositalmente não levam H1 (um
-trecho de conteúdo embutido em outro template, por exemplo):
+**3. Use `--sem-h1` for fragments** that deliberately have no H1 (a piece
+of content embedded in another template, for example). With this flag,
+any H1 found is flagged.
 
 ```bash
 python heading_structure_lint.py fragmento.html --sem-h1
 ```
 
-**4. Use `--strict` em CI/CD**, para bloquear publicação com hierarquia
-quebrada:
+**4. Use `--strict` in CI/CD** to block publishing with a broken
+hierarchy. The exit code is 1 when there is any warning.
 
 ```bash
 python heading_structure_lint.py pagina.html --strict
 ```
 
-## Perguntas frequentes
+## FAQ
 
-**heading-structure-lint é realmente grátis?**
-Sim, código aberto sob licença MIT.
+**Is heading-structure-lint really free?**
+Yes. It is open source under the MIT license.
 
-**Por que ter exatamente um H1 importa tanto?**
-Não é uma regra universal do HTML5 (a especificação permite mais de um H1
-por seção), mas é a convenção mais usada e mais previsível para leitor de
-tela e para SEO — um H1 por página deixa claro qual é o assunto principal.
+**Why does having exactly one H1 matter so much?**
+It is not a universal HTML rule (the HTML specification allows more than
+one H1 in a document), but it is the most common and most predictable
+convention for screen readers and for SEO. One H1 per page makes the main
+topic clear.
 
-**A ferramenta corrige a hierarquia automaticamente?**
-Não. Só aponta o problema; a correção do HTML é manual.
+**Does the tool fix the hierarchy automatically?**
+No. It only flags the problem. Fixing the HTML is manual.
 
-## Limitações
+## Limitations
 
-Analisa a ordem dos headings no HTML, não a ordem visual renderizada — CSS
-que reordena visualmente a página não é detectado. Não avalia se o texto
-do heading é bom, só a estrutura.
+It analyzes the order of headings in the HTML, not the rendered visual
+order. CSS that visually reorders the page is not detected. It does not
+judge whether the heading text is good, only the structure.
 
-## Autor
+## Contributing
 
-[Lucas Ferraz](https://lucasferraz.com) — especialista em SEO, criação de
-sites e SEO para IA, fundador da [Lucas Ferraz SEO](https://lucasferrazseo.com).
+Bug reports and suggestions are welcome through [GitHub Issues](https://github.com/LucasFerrazSEO/heading-structure-lint/issues).
 
-## Licença
+## Author
 
-MIT — ver [LICENSE](LICENSE).
+[Lucas Ferraz](https://lucasferraz.com) is an SEO, website development and Generative Engine Optimization specialist and the founder of [Lucas Ferraz SEO](https://lucasferrazseo.com).
+
+## License
+
+MIT. See [LICENSE](LICENSE).
